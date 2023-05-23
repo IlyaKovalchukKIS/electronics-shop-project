@@ -30,6 +30,9 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls):
+        """
+        Создает экземпляры класса на основе таблицы хранящейся в items.csv
+        """
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(dir_path + '/items.csv', encoding='utf-8') as csv_file:
             csv_reader = DictReader(csv_file)
@@ -42,6 +45,9 @@ class Item:
 
     @staticmethod
     def string_to_number(number):
+        """
+        Преобразовывает строки-числа в числа
+        """
         if "." in number:
             return int(float(number))
         else:
@@ -49,14 +55,21 @@ class Item:
 
     @property
     def name(self):
+        """
+        Геттер, который возвращает наименование товара
+        """
         return self.__name
 
     @name.setter
     def name(self, name: str):
+        """
+        Сеттер, который проверяет длину названия товара,
+        и если она не больше 10 символов то записывает ее
+        """
         if len(name) <= 10:
             self.__name = name
         else:
-            print('Длина товара превышает 10 символов')
+            raise Exception('Длина товара превышает 10 символов')
 
     def calculate_total_price(self) -> float:
         """
