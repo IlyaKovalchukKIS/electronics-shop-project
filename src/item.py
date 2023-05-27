@@ -22,17 +22,15 @@ class Item:
         self.quantity = quantity
         self.all.append(self)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.__name}"
 
     @classmethod
-    def instantiate_from_csv(cls):
-        """
-        Создает экземпляры класса на основе таблицы хранящейся в items.csv
-        """
+    def instantiate_from_csv(cls) -> None:
+        """Создает экземпляры класса на основе таблицы хранящейся в items.csv"""
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(dir_path + '/items.csv', encoding='utf-8') as csv_file:
             csv_reader = DictReader(csv_file)
@@ -44,7 +42,7 @@ class Item:
                 cls(name, float(price), int(quantity))
 
     @staticmethod
-    def string_to_number(number):
+    def string_to_number(number: str) -> int:
         """
         Преобразовывает строки-числа в числа
         """
@@ -54,14 +52,14 @@ class Item:
             return int(number)
 
     @property
-    def name(self):
+    def name(self) -> str:
         """
         Геттер, который возвращает наименование товара
         """
         return self.__name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name: str) -> None:
         """
         Сеттер, который проверяет длину названия товара,
         и если она не больше 10 символов то записывает ее
