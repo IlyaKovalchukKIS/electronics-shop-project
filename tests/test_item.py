@@ -53,3 +53,14 @@ def test_items_repr():
 def test_items_str():
     item1 = Item("Смартфон", 10_000, 20)
     assert item1.__str__() == 'Смартфон'
+
+
+def test_item_add():
+    item1 = Item("Смартфон", 10_000, 20)
+    item2 = Item("Ноутбук", 60_000, 5)
+    assert item1 + item2 == 25
+
+    with pytest.raises(Exception):
+        assert item1 + 24
+    with pytest.raises(Exception):
+        assert item2 + 'str'
