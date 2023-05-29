@@ -28,9 +28,19 @@ class Item:
     def __str__(self) -> str:
         return f"{self.__name}"
 
+    def __add__(self, other):
+        """
+        Метод для сложения количества товара в магазине
+        """
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        raise Exception("Неверный формат сложения")
+
     @classmethod
     def instantiate_from_csv(cls) -> None:
-        """Создает экземпляры класса на основе таблицы хранящейся в items.csv"""
+        """
+        Создает экземпляры класса на основе таблицы хранящейся в items.csv
+        """
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(dir_path + '/items.csv', encoding='utf-8') as csv_file:
             csv_reader = DictReader(csv_file)
