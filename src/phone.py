@@ -17,13 +17,15 @@ class Phone(Item):
         if self.check_sim(number_of_sim):
             self.__number_of_sim = number_of_sim
 
-        self.__name = name
+        self.__name: str = name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        """Магический метод возвращающий информацию для разработчика"""
         return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity}, {self.number_of_sim})"
 
     @staticmethod
-    def check_sim(number_of_sim):
+    def check_sim(number_of_sim: int) -> int:
+        """Staticmethod проверяющий количество сим-карт"""
         if number_of_sim > 0 and isinstance(number_of_sim, int):
             return number_of_sim
         raise ValueError("Количество физических SIM-карт должно быть целым числом больше нуля.")
