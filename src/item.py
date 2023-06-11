@@ -2,6 +2,10 @@ import os
 from csv import DictReader
 
 
+class InstantiateCSVError(Exception):
+    pass
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -45,14 +49,20 @@ class Item:
         Создает экземпляры класса на основе таблицы хранящейся в items.csv
         """
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + '/items.csv', encoding='utf-8') as csv_file:
-            csv_reader = DictReader(csv_file)
-            cls.all = []
-            for (row) in csv_reader:
-                name = row['name']
-                price = row['price']
-                quantity = row['quantity']
-                cls(name, float(price), int(quantity))
+        try:
+            with open(dir_path + '/items.csv', encoding='utf-8') as csv_file:
+                csv_reader = DictReader(csv_file)
+                cls.all = []
+                for row in csv_reader:
+                    try:
+                        name = row['name']
+                        price = row['price']
+                        quantity = row['quantity']
+                        cls(name, float(price), int(quantity))
+                    except KeyError:
+                        raise InstantiateCSVError('Файл item.csv поврежден')
+        except FileNotFoundError:
+            raise FileNotFoundError("Отсутствует файл item.csv")
 
     @staticmethod
     def string_to_number(number: str) -> int:
