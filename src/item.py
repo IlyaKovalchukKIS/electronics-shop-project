@@ -12,6 +12,8 @@ class Item:
     """
     pay_rate = 1.0
     all = []
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    dir_path = dir_path + '/items.csv'
 
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
@@ -44,13 +46,13 @@ class Item:
         raise Exception("Неверный формат сложения")
 
     @classmethod
-    def instantiate_from_csv(cls) -> None:
+    def instantiate_from_csv(cls, default=False) -> None:
         """
         Создает экземпляры класса на основе таблицы хранящейся в items.csv
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
         try:
-            with open(dir_path + '/items.csv', encoding='utf-8') as csv_file:
+            file_csv = default if default else cls.dir_path
+            with open(file_csv, encoding='utf-8') as csv_file:
                 csv_reader = DictReader(csv_file)
                 cls.all = []
                 for row in csv_reader:
